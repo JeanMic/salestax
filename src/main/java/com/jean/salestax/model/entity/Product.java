@@ -7,6 +7,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -38,9 +39,9 @@ public class Product {
 	@Enumerated(value = EnumType.STRING)
 	private ProductOrigin origin;
 	
-//	@OneToMany
-//	@Column(name = "id_type")
-//	private Integer idType;
+	@ManyToOne
+	@JoinColumn(name = "id_type")
+	private TypeOfProduct type;
 	
 	@Column(name = "price")
 	private String price;
