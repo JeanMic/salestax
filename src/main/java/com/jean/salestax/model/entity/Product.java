@@ -44,5 +44,5 @@ public class Product {
 	private TypeOfProduct type;
 	
 	@Column(name = "price")
-	private String price;
+	private Double price;
 }
