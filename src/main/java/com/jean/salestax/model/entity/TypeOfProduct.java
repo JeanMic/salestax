@@ -1,5 +1,7 @@
 package com.jean.salestax.model.entity;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -7,6 +9,9 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import com.jean.salestax.model.enums.TypeProduct;
@@ -38,4 +43,12 @@ public class TypeOfProduct {
 	
 	@Column(name = "taxable")
 	private Boolean taxable;
+	
+	@ManyToMany
+	@JoinTable(
+			  name = "type_product_has_aliquots", 
+			  schema = "sales",
+			  joinColumns = @JoinColumn(name = "id_type"), 
+			  inverseJoinColumns = @JoinColumn(name = "id_aliquot"))
+    Set<Aliquot> aliquotes;
 }
