@@ -1,7 +1,5 @@
 package com.jean.salestax.api.dto;
 
-import java.util.Map;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

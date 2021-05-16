@@ -1,16 +1,11 @@
 package com.jean.salestax.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import com.jean.salestax.api.dto.PurchaseDTO;
-import com.jean.salestax.model.entity.Aliquot;
 import com.jean.salestax.model.entity.Product;
 import com.jean.salestax.model.repository.ProductRepository;
 import com.jean.salestax.service.ProductService;
