@@ -15,7 +15,7 @@ public class PurchaseReceiptItemDTO {
 
 	private Integer quantity;
 	
-	private String nameProduct;
+	private String description;
 	
 	private Double calculatedPrice;
 }
