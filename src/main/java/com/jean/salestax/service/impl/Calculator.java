@@ -29,9 +29,9 @@ public class Calculator {
 		Double productPrice = product.getPrice();
 		
 		Double roundedTax = roundTax(totalAliquotes * productPrice);
-		Double roundAmount = roundAmount(productPrice, roundedTax);
+		Double roundedAmount = roundAmount(productPrice, roundedTax);
 		
-		return roundAmount;
+		return roundedAmount;
 	}
 	
 	public static Double calculateAmountOfPurchase(List<Product> products, Double tax) {
