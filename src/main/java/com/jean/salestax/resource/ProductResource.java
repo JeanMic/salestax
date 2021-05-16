@@ -1,10 +1,12 @@
 package com.jean.salestax.resource;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+
+import javax.validation.Valid;
+import javax.validation.constraints.Size;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.jean.salestax.api.dto.PurchaseDTO;
 import com.jean.salestax.api.dto.PurchaseReceiptDTO;
 import com.jean.salestax.api.dto.PurchaseReceiptItemDTO;
+import com.jean.salestax.model.entity.Aliquot;
 import com.jean.salestax.model.entity.Product;
 import com.jean.salestax.service.ProductService;
+import com.sun.istack.NotNull;
 
 import lombok.RequiredArgsConstructor;
 
@@ -39,45 +43,29 @@ public class ProductResource {
 		return ResponseEntity.ok(produto);
 	}
 
-	@GetMapping("/testeRetorno")
-	public ResponseEntity obterCompra() {
-
-		return ResponseEntity.ok(convert());
-	}
-
-	private PurchaseReceiptDTO convert() {
-
-		PurchaseReceiptItemDTO primeiro = PurchaseReceiptItemDTO.builder()
-				.quantity(1)
-				.nameProduct("jean vai dormir!!")
-				.calculatedPrice(15.90)
-				.build();
-
-		PurchaseReceiptItemDTO segundo = PurchaseReceiptItemDTO.builder()
-				.quantity(1)
-				.nameProduct("jean vai dormir ja e tarde!!")
-				.calculatedPrice(20.90)
-				.build();
-
-		ArrayList<PurchaseReceiptItemDTO> lista = new ArrayList<>();
-
-		lista.add(primeiro);
-		lista.add(segundo);
-		
-		return PurchaseReceiptDTO.builder()
-				.tax(7.65)
-				.amountDue(65.15)
-				.purchaseItems(lista)
-				.build();
-	}
-	
 	@PostMapping("/purchase_summary")
-	public ResponseEntity purchaseSummary(@RequestBody List<PurchaseDTO> dto) {
-	
-		try {
-			return new ResponseEntity(dto, HttpStatus.ACCEPTED);
-		} catch (Exception e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
+	public ResponseEntity purchaseSummary(@RequestBody List<PurchaseDTO> dtos) {
+
+		List<Product> listProducts = new ArrayList<Product>();
+		ArrayList<PurchaseReceiptItemDTO> listItens = new ArrayList<>();
+
+		for (PurchaseDTO dto : dtos) {
+			Product product = (service.findById(dto.getProductId())).get();
+
+			listProducts.add(product);
+
+			PurchaseReceiptItemDTO item = PurchaseReceiptItemDTO.builder().quantity(dto.getQuantity())
+					.description(product.getDescription()).calculatedPrice(service.calculateAmountOfProduct(product))
+					.build();
+
+			listItens.add(item);
 		}
+
+		Double tax = service.calculateTaxs(listProducts);
+
+		PurchaseReceiptDTO result = PurchaseReceiptDTO.builder().tax(tax)
+				.amountDue(service.calculateAmountOfPurchase(listProducts, tax)).purchaseItems(listItens).build();
+
+		return new ResponseEntity(result, HttpStatus.ACCEPTED);
 	}
 }
