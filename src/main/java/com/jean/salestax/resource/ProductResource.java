@@ -6,12 +6,16 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jean.salestax.api.dto.PurchaseDTO;
 import com.jean.salestax.api.dto.PurchaseReceiptDTO;
 import com.jean.salestax.api.dto.PurchaseReceiptItemDTO;
 import com.jean.salestax.model.entity.Product;
@@ -38,7 +42,6 @@ public class ProductResource {
 	@GetMapping("/testeRetorno")
 	public ResponseEntity obterCompra() {
 
-	
 		return ResponseEntity.ok(convert());
 	}
 
@@ -66,5 +69,15 @@ public class ProductResource {
 				.amountDue(65.15)
 				.purchaseItems(lista)
 				.build();
+	}
+	
+	@PostMapping("/purchase_summary")
+	public ResponseEntity purchaseSummary(@RequestBody List<PurchaseDTO> dto) {
+	
+		try {
+			return new ResponseEntity(dto, HttpStatus.ACCEPTED);
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
 	}
 }
