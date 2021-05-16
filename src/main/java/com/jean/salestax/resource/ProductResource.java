@@ -3,10 +3,6 @@ package com.jean.salestax.resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-
-import javax.validation.Valid;
-import javax.validation.constraints.Size;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,10 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.jean.salestax.api.dto.PurchaseDTO;
 import com.jean.salestax.api.dto.PurchaseReceiptDTO;
 import com.jean.salestax.api.dto.PurchaseReceiptItemDTO;
-import com.jean.salestax.model.entity.Aliquot;
 import com.jean.salestax.model.entity.Product;
 import com.jean.salestax.service.ProductService;
-import com.sun.istack.NotNull;
 
 import lombok.RequiredArgsConstructor;
 
@@ -53,19 +47,24 @@ public class ProductResource {
 			Product product = (service.findById(dto.getProductId())).get();
 
 			listProducts.add(product);
-
-			PurchaseReceiptItemDTO item = PurchaseReceiptItemDTO.builder().quantity(dto.getQuantity())
-					.description(product.getDescription()).calculatedPrice(service.calculateAmountOfProduct(product))
-					.build();
-
-			listItens.add(item);
+			listItens.add(buildPurchaseReceiptItem(dto, product));
 		}
 
 		Double tax = service.calculateTaxs(listProducts);
 
-		PurchaseReceiptDTO result = PurchaseReceiptDTO.builder().tax(tax)
-				.amountDue(service.calculateAmountOfPurchase(listProducts, tax)).purchaseItems(listItens).build();
+		PurchaseReceiptDTO result = buildPurchaseReceipt(tax, listProducts, listItens);
 
 		return new ResponseEntity(result, HttpStatus.ACCEPTED);
+	}
+	
+	private PurchaseReceiptItemDTO buildPurchaseReceiptItem(PurchaseDTO dto, Product product) {
+		return PurchaseReceiptItemDTO.builder().quantity(dto.getQuantity())
+				.description(product.getDescription()).calculatedPrice(service.calculateAmountOfProduct(product))
+				.build();
+	}
+	
+	private PurchaseReceiptDTO buildPurchaseReceipt(Double tax, List<Product> listProducts, ArrayList<PurchaseReceiptItemDTO> listItens) {
+		return PurchaseReceiptDTO.builder().tax(tax)
+				.amountDue(service.calculateAmountOfPurchase(listProducts, tax)).purchaseItems(listItens).build();
 	}
 }
