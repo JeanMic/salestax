@@ -12,15 +12,15 @@ import com.jean.salestax.api.dto.PurchaseReceiptDTO;
 import com.jean.salestax.api.dto.PurchaseReceiptItemDTO;
 import com.jean.salestax.model.entity.Product;
 import com.jean.salestax.model.repository.ProductRepository;
-import com.jean.salestax.service.ProductService;
+import com.jean.salestax.service.PurchaseService;
 
 @Service
-public class ProductServiceImpl implements ProductService
+public class PurchaseServiceImpl implements PurchaseService
 {
 	private ProductRepository repository;
 	
 	@Autowired
-	public ProductServiceImpl(ProductRepository repository) {
+	public PurchaseServiceImpl(ProductRepository repository) {
 		super();
 		this.repository = repository;
 	}
@@ -72,14 +72,19 @@ public class ProductServiceImpl implements ProductService
 	}
 	
 	private PurchaseReceiptItemDTO buildPurchaseReceiptItem(PurchaseDTO dto, Product product) {
-		return PurchaseReceiptItemDTO.builder().quantity(dto.getQuantity())
-				.description(product.getDescription()).calculatedPrice(calculateAmountOfProduct(product))
+		return PurchaseReceiptItemDTO.builder()
+				.quantity(dto.getQuantity())
+				.description(product.getDescription())
+				.calculatedPrice(calculateAmountOfProduct(product))
 				.build();
 	}
 	
 	private PurchaseReceiptDTO buildPurchaseReceipt(Double tax, List<Product> listProducts, ArrayList<PurchaseReceiptItemDTO> listItens) {
-		return PurchaseReceiptDTO.builder().tax(tax)
-				.amountDue(calculateAmountOfPurchase(listProducts, tax)).purchaseItems(listItens).build();
+		return PurchaseReceiptDTO.builder()
+				.tax(tax)
+				.amountDue(calculateAmountOfPurchase(listProducts, tax))
+				.purchaseItems(listItens)
+				.build();
 	}
 }
 

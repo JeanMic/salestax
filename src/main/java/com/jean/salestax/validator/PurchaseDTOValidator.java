@@ -4,11 +4,11 @@ import java.util.List;
 
 import com.jean.salestax.api.dto.PurchaseDTO;
 import com.jean.salestax.exception.ImputException;
-import com.jean.salestax.service.ProductService;
+import com.jean.salestax.service.PurchaseService;
 
 public class PurchaseDTOValidator {
 
-	public static void validate(List<PurchaseDTO> dtos, ProductService service) {
+	public static void validate(List<PurchaseDTO> dtos, PurchaseService service) {
 		listValidate(dtos);
 		listItemsNotNullValidate(dtos);
 		listItemsPositiveValuesValidate(dtos);
@@ -47,7 +47,7 @@ public class PurchaseDTOValidator {
 	
 	}
 	
-	private static void listItemsExistsOnBdValidate(List<PurchaseDTO> dtos, ProductService service) {
+	private static void listItemsExistsOnBdValidate(List<PurchaseDTO> dtos, PurchaseService service) {
 		
 		for (PurchaseDTO dto : dtos) {
 			if (!service.existsById(dto.getProductId()))

@@ -7,7 +7,7 @@ import com.jean.salestax.api.dto.PurchaseDTO;
 import com.jean.salestax.api.dto.PurchaseReceiptDTO;
 import com.jean.salestax.model.entity.Product;
 
-public interface ProductService {
+public interface PurchaseService {
 
 	Optional<Product> findById(Long id);
 	

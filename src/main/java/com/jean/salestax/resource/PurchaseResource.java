@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jean.salestax.api.dto.PurchaseDTO;
 import com.jean.salestax.api.dto.PurchaseReceiptDTO;
-import com.jean.salestax.service.ProductService;
+import com.jean.salestax.service.PurchaseService;
 import com.jean.salestax.validator.PurchaseDTOValidator;
 
 import lombok.RequiredArgsConstructor;
@@ -19,9 +19,9 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/api/products")
 @RequiredArgsConstructor
-public class ProductResource {
+public class PurchaseResource {
 
-	private final ProductService service;
+	private final PurchaseService service;
 
 	@PostMapping("/purchase_summary")
 	public ResponseEntity purchaseSummary(@RequestBody List<PurchaseDTO> dtos) {
