@@ -57,7 +57,7 @@ public class ProductResource {
 
 		PurchaseReceiptDTO result = buildPurchaseReceipt(tax, listProducts, listItens);
 
-		return new ResponseEntity(result, HttpStatus.ACCEPTED);
+		return new ResponseEntity(result, HttpStatus.OK);
 	}
 	
 	private PurchaseReceiptItemDTO buildPurchaseReceiptItem(PurchaseDTO dto, Product product) {
