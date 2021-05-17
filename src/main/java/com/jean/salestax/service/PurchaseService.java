@@ -9,15 +9,7 @@ import com.jean.salestax.model.entity.Product;
 
 public interface PurchaseService {
 
-	Optional<Product> findById(Long id);
-	
 	boolean existsById(Long id);
-	
-	public Double calculateTaxs(List<Product> products);
-	
-	public Double calculateAmountOfPurchase(List<Product> products, Double tax);
-	
-	public Double calculateAmountOfProduct(Product product);
-	
+
 	public PurchaseReceiptDTO sumary(List<PurchaseDTO> dtos);
 }

@@ -26,28 +26,8 @@ public class PurchaseServiceImpl implements PurchaseService
 	}
 
 	@Override
-	public Optional<Product> findById(Long id) {
-		return repository.findById(id);
-	}
-	
-	@Override
 	public boolean existsById(Long id) {
 		return repository.existsById(id);
-	}
-	
-	@Override
-	public Double calculateTaxs(List<Product> products) {
-		return Calculator.calculateTaxs(products);
-	}
-
-	@Override
-	public Double calculateAmountOfPurchase(List<Product> products, Double tax) {
-		return Calculator.calculateAmountOfPurchase(products, tax);
-	}
-
-	@Override
-	public Double calculateAmountOfProduct(Product product) {
-		return Calculator.calculateAmountOfProduct(product);
 	}
 	
 	@Override
@@ -58,13 +38,13 @@ public class PurchaseServiceImpl implements PurchaseService
 
 		for (PurchaseDTO dto : dtos) {
 			
-			Product product = (findById(dto.getProductId())).get();
+			Product product = (repository.findById(dto.getProductId())).get();
 
 			listProducts.add(product);
 			listItens.add(buildPurchaseReceiptItem(dto, product));
 		}
 
-		Double tax = calculateTaxs(listProducts);
+		Double tax = Calculator.calculateTaxs(listProducts);
 
 		PurchaseReceiptDTO result = buildPurchaseReceipt(tax, listProducts, listItens);
 		return result;
@@ -75,14 +55,14 @@ public class PurchaseServiceImpl implements PurchaseService
 		return PurchaseReceiptItemDTO.builder()
 				.quantity(dto.getQuantity())
 				.description(product.getDescription())
-				.calculatedPrice(calculateAmountOfProduct(product))
+				.calculatedPrice(Calculator.calculateAmountOfProduct(product))
 				.build();
 	}
 	
 	private PurchaseReceiptDTO buildPurchaseReceipt(Double tax, List<Product> listProducts, ArrayList<PurchaseReceiptItemDTO> listItens) {
 		return PurchaseReceiptDTO.builder()
 				.tax(tax)
-				.amountDue(calculateAmountOfPurchase(listProducts, tax))
+				.amountDue(Calculator.calculateAmountOfPurchase(listProducts, tax))
 				.purchaseItems(listItens)
 				.build();
 	}
