@@ -18,6 +18,7 @@ import com.jean.salestax.api.dto.PurchaseReceiptDTO;
 import com.jean.salestax.api.dto.PurchaseReceiptItemDTO;
 import com.jean.salestax.model.entity.Product;
 import com.jean.salestax.service.ProductService;
+import com.jean.salestax.validator.PurchaseDTOValidator;
 
 import lombok.RequiredArgsConstructor;
 
@@ -40,6 +41,8 @@ public class ProductResource {
 	@PostMapping("/purchase_summary")
 	public ResponseEntity purchaseSummary(@RequestBody List<PurchaseDTO> dtos) {
 
+		PurchaseDTOValidator.validate(dtos, service);
+		
 		List<Product> listProducts = new ArrayList<Product>();
 		ArrayList<PurchaseReceiptItemDTO> listItens = new ArrayList<>();
 
