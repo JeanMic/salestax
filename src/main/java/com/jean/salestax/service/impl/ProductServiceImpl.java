@@ -27,6 +27,11 @@ public class ProductServiceImpl implements ProductService
 	}
 	
 	@Override
+	public boolean existsById(Long id) {
+		return repository.existsById(id);
+	}
+	
+	@Override
 	public Double calculateTaxs(List<Product> products) {
 		
 		return Calculator.calculateTaxs(products);

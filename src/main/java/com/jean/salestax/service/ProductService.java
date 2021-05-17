@@ -9,6 +9,8 @@ public interface ProductService {
 
 	Optional<Product> findById(Long id);
 	
+	boolean existsById(Long id);
+	
 	public Double calculateTaxs(List<Product> products);
 	
 	public Double calculateAmountOfPurchase(List<Product> products, Double tax);
