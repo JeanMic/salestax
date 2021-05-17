@@ -52,17 +52,23 @@ public class PurchaseServiceImpl implements PurchaseService
 	}
 	
 	private PurchaseReceiptItemDTO buildPurchaseReceiptItem(PurchaseDTO dto, Product product) {
+		
+		Double calculatedPrice = Calculator.calculateAmountOfProduct(product);
+		
 		return PurchaseReceiptItemDTO.builder()
 				.quantity(dto.getQuantity())
 				.description(product.getDescription())
-				.calculatedPrice(Calculator.calculateAmountOfProduct(product))
+				.calculatedPrice(calculatedPrice)
 				.build();
 	}
 	
 	private PurchaseReceiptDTO buildPurchaseReceipt(Double tax, List<Product> listProducts, ArrayList<PurchaseReceiptItemDTO> listItens) {
+		
+		Double amountDue = Calculator.calculateAmountOfPurchase(listProducts, tax);
+		
 		return PurchaseReceiptDTO.builder()
 				.tax(tax)
-				.amountDue(Calculator.calculateAmountOfPurchase(listProducts, tax))
+				.amountDue(amountDue)
 				.purchaseItems(listItens)
 				.build();
 	}
