@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.jean.salestax.api.dto.PurchaseDTO;
 import com.jean.salestax.exception.ImputException;
+import com.jean.salestax.model.enums.ProductOrigin;
+import com.jean.salestax.model.enums.TypeProduct;
 import com.jean.salestax.service.PurchaseService;
 
 public class PurchaseDTOValidator {
@@ -12,7 +14,6 @@ public class PurchaseDTOValidator {
 		listValidate(dtos);
 		listItemsNotNullValidate(dtos);
 		listItemsPositiveValuesValidate(dtos);
-		listItemsExistsOnBdValidate(dtos, service);		
 	}
 	
 	private static void listValidate(List<PurchaseDTO> dtos) {
@@ -25,11 +26,20 @@ public class PurchaseDTOValidator {
 		
 		for (PurchaseDTO dto : dtos) {
 			
-			if (dto.getProductId() == null)
-				throwException("ProductId cannot be null");
+			if (dto.getOrigin() == null)
+				throwException("Origin cannot be null");
 
+			if (dto.getPrice() == null)
+				throwException("Price cannot be null");
+			
 			if (dto.getQuantity() == null)
 				throwException("Quantity cannot be null");
+
+			if (dto.getType() == null)
+				throwException("Type cannot be null");
+			
+			if (dto.getName() == null)
+				throwException("Name cannot be null");
 		}
 	
 	}
@@ -38,21 +48,13 @@ public class PurchaseDTOValidator {
 		
 		for (PurchaseDTO dto : dtos) {
 			
-			if (dto.getProductId() <= 0)
-				throwException("ProductId cannot be negative or zero");
+			if (dto.getPrice() <= 0)
+				throwException("Price cannot be negative or zero");
 
 			if (dto.getQuantity() <= 0)
 				throwException("Quantity cannot be negative or zero");
 		}
 	
-	}
-	
-	private static void listItemsExistsOnBdValidate(List<PurchaseDTO> dtos, PurchaseService service) {
-		
-		for (PurchaseDTO dto : dtos) {
-			if (!service.existsById(dto.getProductId()))
-				throwException("Product not found");
-		}
 	}
 	
 	private static void throwException(String message) {
