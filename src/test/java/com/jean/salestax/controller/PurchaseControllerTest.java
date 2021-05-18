@@ -61,7 +61,7 @@ public class PurchaseControllerTest {
 	}
 	
 	@Test
-	public void RequestErrorDueToNullImput() throws Exception {
+	public void RequestErrorDueToNullPriceImput() throws Exception {
 		List<PurchaseDTO> listDto = new ArrayList<PurchaseDTO>();
 		
 		PurchaseDTO dto = PurchaseDTO.builder().origin(ProductOrigin.IMPORTED).price(null).quantity(1)
@@ -75,7 +75,7 @@ public class PurchaseControllerTest {
 	}
 	
 	@Test
-	public void RequestErrorDueToNegativeImput() throws Exception {
+	public void RequestErrorDueToNegativeQuantityImput() throws Exception {
 		List<PurchaseDTO> listDto = new ArrayList<PurchaseDTO>();
 		
 		PurchaseDTO dto = PurchaseDTO.builder().origin(ProductOrigin.IMPORTED).price(19.90).quantity(-1)
