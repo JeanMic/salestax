@@ -13,6 +13,7 @@ public class PurchaseDTOValidator {
 	public static void validate(List<PurchaseDTO> dtos, PurchaseService service) {
 		listEmptyValidate(dtos);
 		listItemsNotNullValidate(dtos);
+		listItemsEmpityValidate(dtos);
 		listItemsPositiveValuesValidate(dtos);
 	}
 	
@@ -40,6 +41,16 @@ public class PurchaseDTOValidator {
 			
 			if (dto.getName() == null)
 				throwException("Name cannot be null");
+		}
+	
+	}
+	
+	private static void listItemsEmpityValidate(List<PurchaseDTO> dtos) {
+		
+		for (PurchaseDTO dto : dtos) {
+
+			if (dto.getName().isEmpty())
+				throwException("Name cannot be empty");
 		}
 	
 	}
