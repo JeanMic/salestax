@@ -1,15 +1,10 @@
 package com.jean.salestax.api.dto;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.NoArgsConstructor;
 
 @Data
@@ -22,6 +17,6 @@ public class PurchaseReceiptDTO {
 	
 	private Double amountDue;
 	
-	private ArrayList<PurchaseReceiptItemDTO> purchaseItems;
+	private List<PurchaseReceiptItemDTO> purchaseItems;
 }
 
