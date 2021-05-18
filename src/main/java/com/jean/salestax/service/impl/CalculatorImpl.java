@@ -16,7 +16,7 @@ public class CalculatorImpl implements Calculator {
 
 		for (Product product : products) {
 
-			if (product.isTaxable()) {
+			if (product.isTaxed()) {
 				amountTaxes += getAmountTaxes(product);
 			}
 		}

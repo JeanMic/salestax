@@ -31,7 +31,7 @@ public class ProductFactory {
 	}
 
 	private boolean isEspecial(PurchaseDTO product) {
-		return product.getType() == TypeProduct.OTHER ? false : true;
+		return !(product.getType() == TypeProduct.OTHER) ? true : false;
 	}
 
 	private Product createEspecialProduct(PurchaseDTO dto) {
@@ -42,7 +42,7 @@ public class ProductFactory {
 				.quantity(dto.getQuantity())
 				.type(dto.getType())
 				.name(dto.getName())
-				.taxable(productEspecialIsTaxable(dto))
+				.taxed(productEspecialIsTaxed(dto))
 				.taxes(getTaxesOfProductEspecial(dto))
 				.build();
 
@@ -57,14 +57,14 @@ public class ProductFactory {
 				.quantity(dto.getQuantity())
 				.type(dto.getType())
 				.name(dto.getName())
-				.taxable(true)
+				.taxed(true)
 				.taxes(getTaxesOfProductUnclassified(dto))
 				.build();
 
 		return product;
 	}
 
-	private boolean productEspecialIsTaxable(PurchaseDTO dto) {
+	private boolean productEspecialIsTaxed(PurchaseDTO dto) {
 		return dto.getOrigin() == ProductOrigin.IMPORTED ? true : false;
 	}
 

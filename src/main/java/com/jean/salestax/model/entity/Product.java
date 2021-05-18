@@ -17,6 +17,6 @@ public class Product {
 	private Integer quantity;
 	private TypeProduct type;
 	private String name;
-	private boolean taxable;
+	private boolean taxed;
 	private List<Double> taxes;
 }
