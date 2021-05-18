@@ -5,10 +5,12 @@ import java.util.List;
 import com.jean.salestax.model.enums.ProductOrigin;
 import com.jean.salestax.model.enums.TypeProduct;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
-public abstract class Product {
+@Builder
+public class Product {
 
 	private ProductOrigin origin;
 	private Double price; 

@@ -5,8 +5,6 @@ import java.util.List;
 
 import com.jean.salestax.api.dto.PurchaseDTO;
 import com.jean.salestax.model.entity.Product;
-import com.jean.salestax.model.entity.ProductSpecial;
-import com.jean.salestax.model.entity.ProductUnclassified;
 import com.jean.salestax.model.enums.Aliquot;
 import com.jean.salestax.model.enums.ProductOrigin;
 import com.jean.salestax.model.enums.TypeProduct;
@@ -38,30 +36,32 @@ public class ProductFactory {
 
 	private Product createEspecialProduct(PurchaseDTO dto) {
 
-		ProductSpecial productSpecial = new ProductSpecial();
-		productSpecial.setOrigin(dto.getOrigin());
-		productSpecial.setPrice(dto.getPrice());
-		productSpecial.setQuantity(dto.getQuantity());
-		productSpecial.setType(dto.getType());
-		productSpecial.setName(dto.getName());
-		productSpecial.setTaxable(productEspecialIsTaxable(dto));
-		productSpecial.setTaxes(getTaxesOfProductEspecial(dto));
+		Product product = Product.builder()
+				.origin(dto.getOrigin())
+				.price(dto.getPrice())
+				.quantity(dto.getQuantity())
+				.type(dto.getType())
+				.name(dto.getName())
+				.taxable(productEspecialIsTaxable(dto))
+				.taxes(getTaxesOfProductEspecial(dto))
+				.build();
 
-		return productSpecial;
+		return product;
 	}
 
 	private Product createUnclassifiedProduct(PurchaseDTO dto) {
 
-		ProductUnclassified productUnclassified = new ProductUnclassified();
-		productUnclassified.setOrigin(dto.getOrigin());
-		productUnclassified.setPrice(dto.getPrice());
-		productUnclassified.setQuantity(dto.getQuantity());
-		productUnclassified.setType(dto.getType());
-		productUnclassified.setName(dto.getName());
-		productUnclassified.setTaxable(true);
-		productUnclassified.setTaxes(getTaxesOfProductUnclassified(dto));
+		Product product = Product.builder()
+				.origin(dto.getOrigin())
+				.price(dto.getPrice())
+				.quantity(dto.getQuantity())
+				.type(dto.getType())
+				.name(dto.getName())
+				.taxable(true)
+				.taxes(getTaxesOfProductUnclassified(dto))
+				.build();
 
-		return productUnclassified;
+		return product;
 	}
 
 	private boolean productEspecialIsTaxable(PurchaseDTO dto) {
