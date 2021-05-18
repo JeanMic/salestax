@@ -1,47 +1,20 @@
 package com.jean.salestax.model.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import java.util.List;
 
 import com.jean.salestax.model.enums.ProductOrigin;
+import com.jean.salestax.model.enums.TypeProduct;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Entity
-@Table( name = "products", schema = "sales")
-@Builder
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class Product {
+public abstract class Product {
 
-	@Id
-	@Column(name = "id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
-	@Column(name = "description")
-	private String description;
-	
-	@Column(name = "origin")
-	@Enumerated(value = EnumType.STRING)
 	private ProductOrigin origin;
-	
-	@ManyToOne
-	@JoinColumn(name = "id_type")
-	private TypeOfProduct type;
-	
-	@Column(name = "price")
-	private Double price;
+	private Double price; 
+	private Integer quantity;
+	private TypeProduct type;
+	private String name;
+	private boolean taxable;
+	private List<Double> taxes;
 }
