@@ -3,8 +3,8 @@ package com.jean.salestax.service.impl;
 import java.util.List;
 import java.util.Set;
 
-import com.jean.salestax.model.entity.Aliquot;
 import com.jean.salestax.model.entity.Product;
+import com.jean.salestax.model.enums.Aliquot;
 
 public class Calculator {
 
@@ -15,7 +15,7 @@ public class Calculator {
 
 			Double price = product.getPrice();
 
-			if ((product.getType()).getTaxable()) {
+			if (product.isTaxable()) {
 				amountTaxes += price * getTotalAliquotes(product);
 			}
 		}
@@ -48,10 +48,10 @@ public class Calculator {
 
 		Double totalAliquotes = 0.0;
 
-		Set<Aliquot> aliquotes = (product.getType()).getAliquotes();
+		List<Double> aliquots = product.getTaxes();
 
-		for (Aliquot aliquote : aliquotes) {
-			totalAliquotes += aliquote.getPercentage();
+		for (Double aliquote : aliquots) {
+			totalAliquotes += aliquote;
 		}
 		
 		return totalAliquotes;
