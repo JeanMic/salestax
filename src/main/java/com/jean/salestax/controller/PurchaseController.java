@@ -1,4 +1,4 @@
-package com.jean.salestax.resource;
+package com.jean.salestax.controller;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/api/products")
 @RequiredArgsConstructor
-public class PurchaseResource {
+public class PurchaseController {
 
 	private final PurchaseService service;
 
