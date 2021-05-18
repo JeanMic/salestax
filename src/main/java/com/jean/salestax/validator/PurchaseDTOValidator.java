@@ -11,12 +11,12 @@ import com.jean.salestax.service.PurchaseService;
 public class PurchaseDTOValidator {
 
 	public static void validate(List<PurchaseDTO> dtos, PurchaseService service) {
-		listValidate(dtos);
+		listEmptyValidate(dtos);
 		listItemsNotNullValidate(dtos);
 		listItemsPositiveValuesValidate(dtos);
 	}
 	
-	private static void listValidate(List<PurchaseDTO> dtos) {
+	private static void listEmptyValidate(List<PurchaseDTO> dtos) {
 		
 		if (dtos.isEmpty())
 			throwException("List cannot be empty");
