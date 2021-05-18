@@ -1,14 +1,17 @@
 package com.jean.salestax.service.impl;
 
 import java.util.List;
-import java.util.Set;
+
+import org.springframework.stereotype.Service;
 
 import com.jean.salestax.model.entity.Product;
-import com.jean.salestax.model.enums.Aliquot;
+import com.jean.salestax.service.Calculator;
 
-public class Calculator {
+@Service
+public class CalculatorImpl implements Calculator {
 
-	public static Double calculateTaxs(List<Product> products) {
+	@Override
+	public Double calculateTaxs(List<Product> products) {
 		Double amountTaxes = 0.0;
 
 		for (Product product : products) {
@@ -21,11 +24,12 @@ public class Calculator {
 		return roundTax(amountTaxes);
 	}
 	
-	private static Double getAmountTaxes(Product product) {
+	private Double getAmountTaxes(Product product) {
 		return (product.getPrice() * product.getQuantity()) * getTotalAliquotes(product);
 	}
 	
-	public static Double calculateAmountOfProduct(Product product) {
+	@Override
+	public Double calculateAmountOfProduct(Product product) {
 		
 		Double totalAliquotes = getTotalAliquotes(product);
 		Double productPrice = product.getPrice();
@@ -37,7 +41,8 @@ public class Calculator {
 		return roundedAmount;
 	}
 	
-	public static Double calculateAmountOfPurchase(List<Product> products, Double tax) {
+	@Override
+	public Double calculateAmountOfPurchase(List<Product> products, Double tax) {
 		
 		Double amountDue = 0.0;
 		for (Product product : products) {
@@ -47,7 +52,7 @@ public class Calculator {
 		return roundAmount(amountDue, tax);
 	}
 
-	private static Double getTotalAliquotes(Product product) {
+	private Double getTotalAliquotes(Product product) {
 
 		Double totalAliquotes = 0.0;
 
@@ -60,12 +65,12 @@ public class Calculator {
 		return totalAliquotes;
 	}
 	
-	private static Double roundTax(Double amountTaxes) {
+	private Double roundTax(Double amountTaxes) {
 		double roundedTaxes = Math.round(amountTaxes * 20.0) / 20.0;
 		return (Double) roundedTaxes;
 	}
 	
-	private static Double roundAmount(Double amount, Double tax) {
+	private Double roundAmount(Double amount, Double tax) {
 		double amountRounded = Math.round((amount + tax)  * 100.0) / 100.0;
 		return (Double) amountRounded;
 	}

@@ -10,11 +10,17 @@ import com.jean.salestax.api.dto.PurchaseReceiptDTO;
 import com.jean.salestax.api.dto.PurchaseReceiptItemDTO;
 import com.jean.salestax.factories.ProductFactory;
 import com.jean.salestax.model.entity.Product;
+import com.jean.salestax.service.Calculator;
 import com.jean.salestax.service.PurchaseService;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class PurchaseServiceImpl implements PurchaseService
 {
+	private final Calculator calculator;
+	
 	@Override
 	public PurchaseReceiptDTO sumary(List<PurchaseDTO> dtos) {
 		
@@ -26,16 +32,15 @@ public class PurchaseServiceImpl implements PurchaseService
 			listItens.add(buildPurchaseReceiptItem(product));
 		}
 
-		Double tax = Calculator.calculateTaxs(products);
+		Double tax = calculator.calculateTaxs(products);
 
 		PurchaseReceiptDTO result = buildPurchaseReceipt(tax, products, listItens);
 		return result;
-		
 	}
 	
 	private PurchaseReceiptItemDTO buildPurchaseReceiptItem(Product product) {
 		
-		Double calculatedPrice = Calculator.calculateAmountOfProduct(product);
+		Double calculatedPrice = calculator.calculateAmountOfProduct(product);
 		
 		return PurchaseReceiptItemDTO.builder()
 				.quantity(product.getQuantity())
@@ -46,7 +51,7 @@ public class PurchaseServiceImpl implements PurchaseService
 	
 	private PurchaseReceiptDTO buildPurchaseReceipt(Double tax, List<Product> listProducts, ArrayList<PurchaseReceiptItemDTO> listItens) {
 		
-		Double amountDue = Calculator.calculateAmountOfPurchase(listProducts, tax);
+		Double amountDue = calculator.calculateAmountOfPurchase(listProducts, tax);
 		
 		return PurchaseReceiptDTO.builder()
 				.tax(tax)
