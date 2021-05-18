@@ -81,6 +81,7 @@ public class ProductFactoryTest {
 		PurchaseDTO dto = PurchaseDTO.builder().origin(ProductOrigin.NATIONAL).price(20.00).quantity(1).type(TypeProduct.BOOKS).name("books").build();
 		PurchaseDTO dto2 = PurchaseDTO.builder().origin(ProductOrigin.NATIONAL).price(20.00).quantity(1).type(TypeProduct.CARES).name("caresr").build();
 		PurchaseDTO dto3 = PurchaseDTO.builder().origin(ProductOrigin.NATIONAL).price(20.00).quantity(1).type(TypeProduct.FOODS).name("foods").build();
+		
 		listDTO.add(dto);
 		listDTO.add(dto2);
 		listDTO.add(dto3);
@@ -102,6 +103,7 @@ public class ProductFactoryTest {
 		PurchaseDTO dto = PurchaseDTO.builder().origin(ProductOrigin.IMPORTED).price(20.00).quantity(1).type(TypeProduct.BOOKS).name("books").build();
 		PurchaseDTO dto2 = PurchaseDTO.builder().origin(ProductOrigin.IMPORTED).price(20.00).quantity(1).type(TypeProduct.CARES).name("caresr").build();
 		PurchaseDTO dto3 = PurchaseDTO.builder().origin(ProductOrigin.IMPORTED).price(20.00).quantity(1).type(TypeProduct.FOODS).name("foods").build();
+		
 		listDTO.add(dto);
 		listDTO.add(dto2);
 		listDTO.add(dto3);
