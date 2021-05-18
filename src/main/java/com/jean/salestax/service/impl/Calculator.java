@@ -13,23 +13,26 @@ public class Calculator {
 
 		for (Product product : products) {
 
-			Double price = product.getPrice();
-
 			if (product.isTaxable()) {
-				amountTaxes += price * getTotalAliquotes(product);
+				amountTaxes += getAmountTaxes(product);
 			}
 		}
 
 		return roundTax(amountTaxes);
 	}
 	
+	private static Double getAmountTaxes(Product product) {
+		return (product.getPrice() * product.getQuantity()) * getTotalAliquotes(product);
+	}
+	
 	public static Double calculateAmountOfProduct(Product product) {
 		
 		Double totalAliquotes = getTotalAliquotes(product);
 		Double productPrice = product.getPrice();
+		Integer quantity = product.getQuantity();
 		
-		Double roundedTax = roundTax(totalAliquotes * productPrice);
-		Double roundedAmount = roundAmount(productPrice, roundedTax);
+		Double roundedTax = roundTax(totalAliquotes * (productPrice * quantity));
+		Double roundedAmount = roundAmount(productPrice * quantity, roundedTax);
 		
 		return roundedAmount;
 	}
@@ -38,7 +41,7 @@ public class Calculator {
 		
 		Double amountDue = 0.0;
 		for (Product product : products) {
-			amountDue += product.getPrice();
+			amountDue += (product.getPrice() * product.getQuantity());
 		}
 		
 		return roundAmount(amountDue, tax);
