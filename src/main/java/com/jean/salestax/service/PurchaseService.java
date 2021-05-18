@@ -9,7 +9,5 @@ import com.jean.salestax.model.entity.Product;
 
 public interface PurchaseService {
 
-	boolean existsById(Long id);
-
 	public PurchaseReceiptDTO sumary(List<PurchaseDTO> dtos);
 }
