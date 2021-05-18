@@ -88,6 +88,20 @@ public class PurchaseControllerTest {
 		Assertions.assertThat(error).hasMessageContaining("Quantity cannot be negative or zero");
 	}
 	
+	@Test
+	public void RequestErrorDueToEmptyNameImput() throws Exception {
+		List<PurchaseDTO> listDto = new ArrayList<PurchaseDTO>();
+		
+		PurchaseDTO dto = PurchaseDTO.builder().origin(ProductOrigin.IMPORTED).price(19.90).quantity(1)
+				.type(TypeProduct.BOOKS).name("").build();
+		
+		listDto.add(dto);
+		
+		Throwable error = runRequest(buildMvcMock(listDto));
+		
+		Assertions.assertThat(error).hasMessageContaining("Name cannot be empty");
+	}
+	
 	private MockHttpServletRequestBuilder buildMvcMock(List<PurchaseDTO> listDto) throws JsonProcessingException {
 		
 		String json = new ObjectMapper().writeValueAsString(listDto);
