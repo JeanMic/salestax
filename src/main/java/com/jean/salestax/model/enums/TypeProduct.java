@@ -5,6 +5,5 @@ public enum TypeProduct {
 	BOOKS,
 	FOODS,
 	CARES,
-	PERFUME,
-	CD
+	OTHER
 }
