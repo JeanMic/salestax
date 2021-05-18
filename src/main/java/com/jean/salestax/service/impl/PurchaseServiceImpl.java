@@ -24,18 +24,12 @@ public class PurchaseServiceImpl implements PurchaseService
 	@Override
 	public PurchaseReceiptDTO sumary(List<PurchaseDTO> dtos) {
 		
-		ProductFactory productFactory = new ProductFactory();
-		List<Product> products = productFactory.createProduct(dtos);
-		ArrayList<PurchaseReceiptItemDTO> listItens = new ArrayList<>();
+		List<Product> products = (new ProductFactory()).createProduct(dtos);
 
-		for (Product product : products) {
-			listItens.add(buildPurchaseReceiptItem(product));
-		}
+		List<PurchaseReceiptItemDTO> receiptItems = getPurchaseReceiptItems(products);
+		PurchaseReceiptDTO purchaseReceipt = buildPurchaseReceipt(products, receiptItems);
 
-		Double tax = calculator.calculateTaxs(products);
-
-		PurchaseReceiptDTO result = buildPurchaseReceipt(tax, products, listItens);
-		return result;
+		return purchaseReceipt;
 	}
 	
 	private PurchaseReceiptItemDTO buildPurchaseReceiptItem(Product product) {
@@ -49,8 +43,9 @@ public class PurchaseServiceImpl implements PurchaseService
 				.build();
 	}
 	
-	private PurchaseReceiptDTO buildPurchaseReceipt(Double tax, List<Product> listProducts, ArrayList<PurchaseReceiptItemDTO> listItens) {
+	private PurchaseReceiptDTO buildPurchaseReceipt(List<Product> listProducts, List<PurchaseReceiptItemDTO> listItens) {
 		
+		Double tax = calculator.calculateTaxs(listProducts);
 		Double amountDue = calculator.calculateAmountOfPurchase(listProducts, tax);
 		
 		return PurchaseReceiptDTO.builder()
@@ -58,6 +53,15 @@ public class PurchaseServiceImpl implements PurchaseService
 				.amountDue(amountDue)
 				.purchaseItems(listItens)
 				.build();
+	}
+	
+	private List<PurchaseReceiptItemDTO> getPurchaseReceiptItems(List<Product> products){
+		List<PurchaseReceiptItemDTO> listItens = new ArrayList<>();
+
+		for (Product product : products) {
+			listItens.add(buildPurchaseReceiptItem(product));
+		}
+		return listItens;
 	}
 }
 
