@@ -13,7 +13,8 @@ Returns details of a fictitious purchase with tax rates calculated on the produc
 *   Perform all of the previous steps
 *   Use an application to test Rest APIs of your choice (Postman, insomnia, ...)
 * 	Perform a POST to the address `http://localhost:8080/api/products/purchase_summary`
-* 	Paste the code below into the request body (text json)
+* 	Paste the code example below into the request body (text json)
+
 
 ```
 [
