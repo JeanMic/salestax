@@ -16,7 +16,7 @@ import com.jean.salestax.model.enums.TypeProduct;
 
 public class PurchaseServiceImplTest {
 
-	PurchaseServiceImpl service = new PurchaseServiceImpl();
+	PurchaseServiceImpl service = new PurchaseServiceImpl(new CalculatorImpl());
 
 	@Test
 	void allProductsNationalEspecialNotHasTax() {
