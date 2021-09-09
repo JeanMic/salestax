@@ -18,27 +18,27 @@ Returns details of a fictitious purchase with tax rates calculated on the produc
 
 ```
 [
-		{
-			"origin": "NATIONAL",
-			"price": 12.49,
-			"quantity": 1,
-			"type": "BOOKS",
-			"name": "livro"
-		},
-		{
-			"origin": "NATIONAL",
-			"price": 14.99,
-			"quantity": 1,
-			"type": "OTHER",
-			"name": "cd"
-		},
-		{
-			"origin": "NATIONAL",
-			"price": 0.85,
-			"quantity": 1,
-			"type": "FOODS",
-			"name": "chocolate"
-		}
+	{
+		"origin": "NATIONAL",
+		"price": 12.49,
+		"quantity": 1,
+		"type": "BOOKS",
+		"name": "livro"
+	},
+	{
+		"origin": "NATIONAL",
+		"price": 14.99,
+		"quantity": 1,
+		"type": "OTHER",
+		"name": "cd"
+	},
+	{
+		"origin": "NATIONAL",
+		"price": 0.85,
+		"quantity": 1,
+		"type": "FOODS",
+		"name": "chocolate"
+	}
 ]
 ```
 * 	Run the request, if everything is correct, the request was made and you will be able to observe the calculated product data on the return
